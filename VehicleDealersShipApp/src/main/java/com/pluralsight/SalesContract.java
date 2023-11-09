@@ -2,6 +2,34 @@ package com.pluralsight;
 
 public class SalesContract extends Contract {
 
+    public void setProcessingFee(double processingFee) {
+        this.processingFee = processingFee;
+    }
+
+    public double getSaleTax() {
+        return saleTax;
+    }
+
+    public void setSaleTax(double saleTax) {
+        this.saleTax = saleTax;
+    }
+
+    public double getRecording_fee() {
+        return recording_fee;
+    }
+
+    public void setRecording_fee(double recording_fee) {
+        this.recording_fee = recording_fee;
+    }
+
+    public boolean isFinance() {
+        return isFinance;
+    }
+
+    public void setFinance(boolean finance) {
+        isFinance = finance;
+    }
+
     private double processingFee;
     private double saleTax;
     private double recording_fee = 100.00;

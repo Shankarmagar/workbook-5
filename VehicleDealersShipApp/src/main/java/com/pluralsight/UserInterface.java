@@ -39,7 +39,7 @@ public class UserInterface {
         case 1-> processAddVehicleRequest();
         case 2-> processRemoveVehicleRequest();
         case 3-> processAllVehiclesRequest();
-        case 4->
+        //writing for sell and lease
         case 6-> System.exit(0);
         default -> System.out.println("Please re-enter valid input.");
        }
