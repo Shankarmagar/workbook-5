@@ -49,6 +49,7 @@ public class ContractDataManager {
                    salesContract.isFinance() ? "YES" : "NO",
                    salesContract.getMonthlyPayment()));
        }
+       writer.close();
      }
      catch(IOException e)
      {

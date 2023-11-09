@@ -9,6 +9,8 @@ public class UserInterface {
     Scanner scanner = new Scanner(System.in);
     Dealership dealership;
 
+    ContractDataManager myContractManager = new ContractDataManager();
+
     UserInterface() {
 
     }
@@ -26,7 +28,7 @@ public class UserInterface {
                     2. Remove Vehicles
                     3. Customize search
                     4. Sale Contract Vehicle
-                    5. Lease Vehicle
+                    5. Lease Contract Vehicle
                     6. Exit
                     """);
             int answer = scanner.nextInt();
@@ -37,11 +39,16 @@ public class UserInterface {
                 case 3 -> processAllVehiclesRequest();
                 //writing for sell and lease
                 case 4 -> processSaleContractVehicle();
+                case 5 -> processLeaseContractVehicle();
                 case 6 -> System.exit(0);
                 default -> System.out.println("Please re-enter valid input.");
             }
 
         }
+    }
+
+    private void processLeaseContractVehicle() {
+
     }
 
     private void processSaleContractVehicle() {
@@ -52,6 +59,7 @@ public class UserInterface {
                 """);
         System.out.println("Enter date: ");
         String date = scanner.nextLine();
+        scanner.nextLine();
 
         System.out.println("Enter the name: ");
         String name = scanner.nextLine();
@@ -62,6 +70,21 @@ public class UserInterface {
         System.out.println("Enter the Vin for the vehicle: ");
         int vin = scanner.nextInt();
         scanner.nextLine();
+
+        Vehicle sold = new Vehicle();
+
+        for(Vehicle v :this.dealership.getInventory())
+        {
+            if(v.getVin() == vin)
+            {
+                sold =v;
+            }
+        }
+
+        SalesContract soldVehicleInfo = new SalesContract(date, name, mail, sold);
+
+        myContractManager.saveContract(soldVehicleInfo);
+
 
 
     }
