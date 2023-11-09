@@ -35,8 +35,8 @@ public class SalesContract extends Contract {
     private double recording_fee = 100.00;
     private boolean isFinance;
 
-    public SalesContract(String date, String customerName, String customerEmail, Vehicle sold, double totalPrice, double monthlyPayment) {
-        super(date, customerName, customerEmail, sold, totalPrice, monthlyPayment);
+    public SalesContract(String date, String customerName, String customerEmail, Vehicle sold) {
+        super(date, customerName, customerEmail, sold);
     }
 
 
@@ -54,24 +54,38 @@ public class SalesContract extends Contract {
          this.processingFee = 295;
      }
 
-     this.saleTax = (5/100) * this.getVehicleSold().getPrice();
-     return processingFee + saleTax + recording_fee;
+     this.saleTax = (5.00/100) * this.getVehicleSold().getPrice();
+     return getVehicleSold().getPrice() + processingFee + saleTax + recording_fee;
     }
 
     @Override
     public double getMonthlyPayment() {
         double loanPrice = 0.00;
-        if(isFinance)
-        {
-            if(getVehicleSold().getPrice()>=10000)
-            {
-              loanPrice = 4.25/100 * this.getTotalPrice();
+
+        if (isFinance) {
+            int loanTermMonths;
+            double interestRate;
+
+            if (getVehicleSold().getPrice() >= 10000) {
+                // Loan for 10,000 or more at 4.25% for 48 months
+                interestRate = 4.25 / 100;
+                loanTermMonths = 48;
+            } else {
+                // Loan for less than 10,000 at 5.25% for 24 months
+                interestRate = 5.25 / 100;
+                loanTermMonths = 24;
             }
-            else{
-                loanPrice = 2.25/100 * this.getTotalPrice();
-            }
+
+            loanPrice = interestRate * this.getTotalPrice();
+
+            double monthlyInterestRate = interestRate / 12 / 100;
+            double monthlyPayment = (loanPrice * monthlyInterestRate) /
+                    (1 - Math.pow(1 + monthlyInterestRate, -loanTermMonths));
+
+            return monthlyPayment;
         }
-        return loanPrice;
+
+        return 0.00;
     }
 
 
